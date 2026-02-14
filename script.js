@@ -23,7 +23,7 @@ const bouquetAssets = [
     './8fe197bb917e842ac416b19b0c6f7372-removebg-preview.jpg'
 ];
 
-let isChorus = false;
+let isChorus = true;
 
 // --- NO BUTTON LOGIC (KULIT MODE: Moving Button) ---
 function moveButton() {
