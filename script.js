@@ -19,11 +19,11 @@ const butterflyUrl = 'https://lottie.host/2f306c21-0ede-4f7f-ad5e-7083d2527de9/4
 
 // IMPORTANT: Rename images in your folder to match these!
 const bouquetAssets = [
-    'flower1.jpg',
-    'flower2.jpg'
+    'flower1.png',
+    'flower2.png'
 ];
 
-let isChorus = false;
+let isChorus = true;
 
 // --- NO BUTTON LOGIC (Kulit Mode) ---
 function moveButton() {
