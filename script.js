@@ -17,7 +17,7 @@ const gardenLotties = [
 ];
 const butterflyUrl = 'https://lottie.host/2f306c21-0ede-4f7f-ad5e-7083d2527de9/4cQwTs3u7E.lottie';
 
-// IMPORTANT: Rename your images to 'flower1.jpg' and 'flower2.jpg'
+// IMPORTANT: Rename images in your folder to match these!
 const bouquetAssets = [
     'flower1.jpg',
     'flower2.jpg'
@@ -25,12 +25,11 @@ const bouquetAssets = [
 
 let isChorus = false;
 
-// --- NO BUTTON LOGIC (Kulit Mode: Moves around) ---
+// --- NO BUTTON LOGIC (Kulit Mode) ---
 function moveButton() {
     const maxWidth = window.innerWidth - noBtn.offsetWidth - 20;
     const maxHeight = window.innerHeight - noBtn.offsetHeight - 20;
     
-    // Ensure random position is within screen
     const x = Math.max(10, Math.random() * maxWidth);
     const y = Math.max(10, Math.random() * maxHeight);
     
@@ -39,26 +38,15 @@ function moveButton() {
     noBtn.style.top = `${y}px`;
 }
 
-// Moves on click (Mobile/Desktop)
 noBtn.addEventListener('click', (e) => { 
     e.preventDefault(); 
     moveButton(); 
 });
 
-// Moves on hover (Desktop only)
-noBtn.addEventListener('mouseover', () => {
-    // Only enable hover effect on larger screens (not touch)
-    if(window.matchMedia("(hover: hover)").matches) {
-        moveButton();
-    }
-});
-
-
 // --- YES BUTTON LOGIC ---
 yesBtn.addEventListener('click', () => {
     music.volume = 1.0;
     music.play().then(() => {
-        // Hide Question
         questionContainer.style.opacity = '0';
         questionContainer.style.transform = 'scale(0.9)';
         
@@ -67,31 +55,25 @@ yesBtn.addEventListener('click', () => {
             lyricsContainer.classList.remove('hidden');
             bgFallingContainer.style.opacity = '1';
             
-            // Start Animations
             growGarden();
             spawnButterfly();
         }, 800);
     }).catch((err) => {
         alert("Tap screen to enable music!");
-        console.error(err);
     });
 });
 
-
-// --- GROW GARDEN (Responsive) ---
+// --- GROW GARDEN ---
 function growGarden() {
     gardenContainer.innerHTML = '';
-    
-    // Check if Mobile
     const isMobile = window.innerWidth < 768;
-    const flowerCount = isMobile ? 3 : 5; // Less flowers on mobile
+    const flowerCount = isMobile ? 3 : 5; 
 
     for (let i = 0; i < flowerCount; i++) {
         const url = gardenLotties[i % gardenLotties.length];
         const wrapper = document.createElement('div');
         wrapper.className = 'flower-wrapper';
         
-        // Distribute evenly
         const leftPos = (i + 1) * (100 / (flowerCount + 1));
         wrapper.style.left = `${leftPos}%`; 
 
@@ -118,7 +100,6 @@ function growGarden() {
         const delay = i * 200; 
         
         setTimeout(() => {
-            // Responsive Height
             const minHeight = isMobile ? 120 : 200;
             const variance = isMobile ? 80 : 150;
             const finalHeight = Math.floor(Math.random() * variance) + minHeight;
@@ -134,8 +115,7 @@ function growGarden() {
     }
 }
 
-
-// --- BUTTERFLY (Responsive) ---
+// --- BUTTERFLY ---
 function spawnButterfly() {
     butterflyContainer.innerHTML = '';
     const lottie = document.createElement('dotlottie-wc');
@@ -158,7 +138,6 @@ function spawnButterfly() {
         const randomY = Math.random() * maxY;
         const randomRotate = (Math.random() * 60) - 30; 
 
-        // Landing Logic
         const isLanding = Math.random() > 0.7;
         const duration = isLanding ? 5000 : 3000; 
 
@@ -172,8 +151,7 @@ function spawnButterfly() {
     setTimeout(flyRandomly, 100);
 }
 
-
-// --- BOUQUET LOGIC ---
+// --- BOUQUET ---
 function showBouquet() {
     if(!bouquetContainer.classList.contains('hidden')) return;
     
@@ -186,10 +164,8 @@ function showBouquet() {
     img.src = randomSrc;
     img.classList.add('big-bouquet-img');
     
-    // Error Handling
     img.onerror = function() {
         console.error("Image not found: " + randomSrc);
-        // Fallback to online image
         img.src = "https://png.pngtree.com/png-clipart/20220911/original/pngtree-bouquet-of-red-roses-flowers-png-image_8539659.png";
     };
 
@@ -201,9 +177,8 @@ function hideBouquet() {
     bouquetContainer.innerHTML = '';
 }
 
-
-// --- LYRICS (Synced) ---
-const offset = 0.5; // Adjust this if lyrics are too early/late
+// --- LYRICS ---
+const offset = 0.5;
 
 const rawLyrics = [
     { time: 13.29, text: "Same bed but it feels just a little bit bigger now" },

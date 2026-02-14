@@ -103,12 +103,11 @@ button {
     border: 1px solid rgba(255, 200, 220, 0.3);
     backdrop-filter: blur(5px);
     position: relative;
-    /* Default position inside card */
     z-index: 1001;
     transition: top 0.3s ease, left 0.3s ease;
 }
 
-/* --- FALLING PETALS --- */
+/* --- FALLING PETALS BG --- */
 #bg-falling-container {
     position: fixed;
     top: 0;
@@ -119,13 +118,21 @@ button {
     opacity: 0;
     transition: opacity 2s ease;
     filter: brightness(0.7);
+    overflow: hidden;
 }
 
-#bg-falling-container dotlottie-wc {
+/* Default (Desktop) Logic */
+#bg-desktop {
+    display: block;
+    /* Kita ang Puno */
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* Cover full screen */
+}
+
+#bg-mobile {
+    display: none;
+    /* Tago ang Mobile version */
 }
 
 /* --- GARDEN STYLES --- */
@@ -243,9 +250,7 @@ button {
     width: auto;
     height: auto;
     max-width: 80vw;
-    /* 80% ng lapad ng screen */
     max-height: 55vh;
-    /* 55% ng taas ng screen */
     object-fit: contain;
     opacity: 0;
     animation: softBloom 2s ease-out forwards;
@@ -290,7 +295,6 @@ button {
 
 /* --- RESPONSIVE / MOBILE / TABLET --- */
 
-/* Tablet Adjustments */
 @media (max-width: 1024px) {
     .title {
         font-size: 2rem;
@@ -303,8 +307,26 @@ button {
     }
 }
 
-/* Mobile Adjustments */
+/* --- MOBILE SPECIFIC STYLES --- */
 @media (max-width: 768px) {
+
+    /* 1. SWITCH BACKGROUNDS (Puno -> Mobile Animation) */
+    #bg-desktop {
+        display: none !important;
+        /* Tago Puno */
+    }
+
+    #bg-mobile {
+        display: block !important;
+        /* Labas Mobile Animation */
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transform: scale(1.1);
+        /* Konting zoom para walang puti sa gilid */
+    }
+
+    /* 2. Other Mobile Adjustments */
     .container {
         width: 90%;
         padding: 30px 15px;
@@ -315,13 +337,11 @@ button {
         line-height: 1.3;
     }
 
-    /* Buttons */
     button {
         padding: 10px 24px;
         font-size: 0.9rem;
     }
 
-    /* Flowers (Small for mobile) */
     .flower {
         width: 140px;
         height: 140px;
@@ -332,22 +352,18 @@ button {
         width: 5px;
     }
 
-    /* Butterfly (Small for mobile) */
     .flying-butterfly {
         width: 55px;
         height: 55px;
     }
 
-    /* Bouquet adjustments */
     .big-bouquet-img {
         max-width: 90vw;
         max-height: 45vh;
-        /* Adjust para hindi takpan ang lyrics */
     }
 
-    /* Lyrics position */
     #lyrics-container {
-        bottom: 12%;
+        bottom: 15%;
     }
 
     #lyric-text {
