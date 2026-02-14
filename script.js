@@ -19,11 +19,11 @@ const butterflyUrl = 'https://lottie.host/2f306c21-0ede-4f7f-ad5e-7083d2527de9/4
 
 // BOUQUET ASSETS (Local Files)
 const bouquetAssets = [
-    './4685dcf5a143a61d0a49343e3ae5a3fb-removebg-preview.jpg',
-    './8fe197bb917e842ac416b19b0c6f7372-removebg-preview.jpg'
+    'flower1.png',
+    'flower2.png',
 ];
 
-let isChorus = false;
+let isChorus = true;
 
 // --- NO BUTTON LOGIC (KULIT MODE: Moving Button) ---
 function moveButton() {
