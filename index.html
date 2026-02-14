@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You 🌹</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;500&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.8.11/dist/dotlottie-wc.js" type="module"></script>
+</head>
+
+<body>
+    <div class="vignette"></div>
+
+    <div id="bg-falling-container">
+        <dotlottie-wc src="https://lottie.host/f1b5d896-3f1c-43a7-9ab9-8223b2c7302d/EfEEfkG1XL.lottie" autoplay
+            loop></dotlottie-wc>
+    </div>
+
+    <div class="container" id="question-container">
+        <h1 class="title">Hi, <br> would you like some flowers? 🌹</h1>
+        <div class="buttons">
+            <button id="yesBtn">Yes, please</button>
+            <button id="noBtn">No</button>
+        </div>
+    </div>
+
+    <div id="garden-container"></div>
+    <div id="butterfly-container"></div>
+    <div id="bouquet-container" class="hidden"></div>
+
+    <div id="lyrics-container" class="hidden">
+        <p id="lyric-text">...</p>
+    </div>
+
+    <audio id="bgMusic" preload="auto">
+        <source src="Bruno Mars - When I Was Your Man (Official Music Video).mp3" type="audio/mp3">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
