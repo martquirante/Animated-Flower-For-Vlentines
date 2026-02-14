@@ -17,38 +17,38 @@ const gardenLotties = [
 ];
 const butterflyUrl = 'https://lottie.host/2f306c21-0ede-4f7f-ad5e-7083d2527de9/4cQwTs3u7E.lottie';
 
-// BOUQUET ASSETS (Local Files)
+// IMPORTANT: Rename your images to 'flower1.jpg' and 'flower2.jpg'
 const bouquetAssets = [
-    'flower1.png',
-    'flower2.png',
+    'flower1.jpg',
+    'flower2.jpg'
 ];
 
-let isChorus = true;
+let isChorus = false;
 
-// --- NO BUTTON LOGIC (KULIT MODE: Moving Button) ---
+// --- NO BUTTON LOGIC (Kulit Mode: Moves around) ---
 function moveButton() {
-    // Kinukuha ang lapad at taas ng screen minus ang size ng button
-    // para hindi lumampas sa screen
     const maxWidth = window.innerWidth - noBtn.offsetWidth - 20;
     const maxHeight = window.innerHeight - noBtn.offsetHeight - 20;
     
-    // Random position
+    // Ensure random position is within screen
     const x = Math.max(10, Math.random() * maxWidth);
     const y = Math.max(10, Math.random() * maxHeight);
     
-    noBtn.style.position = 'fixed'; // Gagawin nating fixed para makagalaw kahit saan
+    noBtn.style.position = 'fixed';
     noBtn.style.left = `${x}px`;
     noBtn.style.top = `${y}px`;
 }
 
-// Kapag sinubukan i-click, tatakbo siya
+// Moves on click (Mobile/Desktop)
 noBtn.addEventListener('click', (e) => { 
     e.preventDefault(); 
     moveButton(); 
 });
-// (Optional) Pwede mo rin dagdagan ng 'mouseover' para mas mahirap hulihin sa desktop
+
+// Moves on hover (Desktop only)
 noBtn.addEventListener('mouseover', () => {
-    if(window.innerWidth > 768) { // Sa desktop lang para hindi mahirap sa mobile
+    // Only enable hover effect on larger screens (not touch)
+    if(window.matchMedia("(hover: hover)").matches) {
         moveButton();
     }
 });
@@ -58,32 +58,40 @@ noBtn.addEventListener('mouseover', () => {
 yesBtn.addEventListener('click', () => {
     music.volume = 1.0;
     music.play().then(() => {
+        // Hide Question
         questionContainer.style.opacity = '0';
         questionContainer.style.transform = 'scale(0.9)';
+        
         setTimeout(() => {
             questionContainer.style.display = 'none';
             lyricsContainer.classList.remove('hidden');
             bgFallingContainer.style.opacity = '1';
             
+            // Start Animations
             growGarden();
             spawnButterfly();
         }, 800);
     }).catch((err) => {
         alert("Tap screen to enable music!");
+        console.error(err);
     });
 });
 
 
-// --- GROW GARDEN ---
+// --- GROW GARDEN (Responsive) ---
 function growGarden() {
     gardenContainer.innerHTML = '';
-    const flowerCount = window.innerWidth < 768 ? 3 : 5; 
+    
+    // Check if Mobile
+    const isMobile = window.innerWidth < 768;
+    const flowerCount = isMobile ? 3 : 5; // Less flowers on mobile
 
     for (let i = 0; i < flowerCount; i++) {
         const url = gardenLotties[i % gardenLotties.length];
         const wrapper = document.createElement('div');
         wrapper.className = 'flower-wrapper';
         
+        // Distribute evenly
         const leftPos = (i + 1) * (100 / (flowerCount + 1));
         wrapper.style.left = `${leftPos}%`; 
 
@@ -110,8 +118,9 @@ function growGarden() {
         const delay = i * 200; 
         
         setTimeout(() => {
-            const minHeight = window.innerWidth < 768 ? 150 : 250;
-            const variance = window.innerWidth < 768 ? 100 : 200;
+            // Responsive Height
+            const minHeight = isMobile ? 120 : 200;
+            const variance = isMobile ? 80 : 150;
             const finalHeight = Math.floor(Math.random() * variance) + minHeight;
             
             stem.style.height = `${finalHeight}px`;
@@ -126,7 +135,7 @@ function growGarden() {
 }
 
 
-// --- BUTTERFLY ---
+// --- BUTTERFLY (Responsive) ---
 function spawnButterfly() {
     butterflyContainer.innerHTML = '';
     const lottie = document.createElement('dotlottie-wc');
@@ -139,7 +148,9 @@ function spawnButterfly() {
     setTimeout(() => { butterflyContainer.style.opacity = '1'; }, 500);
 
     function flyRandomly() {
-        const butterflySize = window.innerWidth < 768 ? 60 : 80;
+        const isMobile = window.innerWidth < 768;
+        const butterflySize = isMobile ? 55 : 80;
+        
         const maxX = window.innerWidth - butterflySize;
         const maxY = window.innerHeight - butterflySize;
 
@@ -147,7 +158,7 @@ function spawnButterfly() {
         const randomY = Math.random() * maxY;
         const randomRotate = (Math.random() * 60) - 30; 
 
-        // Landing logic
+        // Landing Logic
         const isLanding = Math.random() > 0.7;
         const duration = isLanding ? 5000 : 3000; 
 
@@ -175,9 +186,10 @@ function showBouquet() {
     img.src = randomSrc;
     img.classList.add('big-bouquet-img');
     
+    // Error Handling
     img.onerror = function() {
-        console.error("Hindi makita ang image:", randomSrc);
-        // Fallback image (Online link) just in case
+        console.error("Image not found: " + randomSrc);
+        // Fallback to online image
         img.src = "https://png.pngtree.com/png-clipart/20220911/original/pngtree-bouquet-of-red-roses-flowers-png-image_8539659.png";
     };
 
@@ -190,8 +202,8 @@ function hideBouquet() {
 }
 
 
-// --- LYRICS & TIMING ---
-const offset = 0.5;
+// --- LYRICS (Synced) ---
+const offset = 0.5; // Adjust this if lyrics are too early/late
 
 const rawLyrics = [
     { time: 13.29, text: "Same bed but it feels just a little bit bigger now" },

@@ -96,16 +96,16 @@ button {
     transform: translateY(-3px);
 }
 
-/* --- NO BUTTON --- */
+/* --- NO BUTTON (Kulit Mode) --- */
 #noBtn {
     background: rgba(255, 255, 255, 0.05);
     color: #ffc0cb;
     border: 1px solid rgba(255, 200, 220, 0.3);
     backdrop-filter: blur(5px);
     position: relative;
+    /* Default position inside card */
     z-index: 1001;
     transition: top 0.3s ease, left 0.3s ease;
-    /* Adjusted transition for smooth moving */
 }
 
 /* --- FALLING PETALS --- */
@@ -125,6 +125,7 @@ button {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    /* Cover full screen */
 }
 
 /* --- GARDEN STYLES --- */
@@ -224,7 +225,7 @@ button {
     transition: all 3s ease-in-out;
 }
 
-/* --- BOUQUET --- */
+/* --- BOUQUET (Responsive) --- */
 #bouquet-container {
     position: absolute;
     top: 50%;
@@ -239,9 +240,14 @@ button {
 }
 
 .big-bouquet-img {
-    max-width: 90%;
-    max-height: 60vh;
+    width: auto;
+    height: auto;
+    max-width: 80vw;
+    /* 80% ng lapad ng screen */
+    max-height: 55vh;
+    /* 55% ng taas ng screen */
     object-fit: contain;
+    opacity: 0;
     animation: softBloom 2s ease-out forwards;
     filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6));
 }
@@ -283,49 +289,69 @@ button {
 }
 
 /* --- RESPONSIVE / MOBILE / TABLET --- */
+
+/* Tablet Adjustments */
 @media (max-width: 1024px) {
+    .title {
+        font-size: 2rem;
+    }
+
     .flower {
         width: 220px;
         height: 220px;
         margin-bottom: -50px;
     }
-
-    #lyric-text {
-        font-size: 1.8rem;
-    }
 }
 
+/* Mobile Adjustments */
 @media (max-width: 768px) {
     .container {
-        padding: 30px 20px;
-        width: 85%;
+        width: 90%;
+        padding: 30px 15px;
     }
 
     .title {
         font-size: 1.5rem;
+        line-height: 1.3;
     }
 
+    /* Buttons */
+    button {
+        padding: 10px 24px;
+        font-size: 0.9rem;
+    }
+
+    /* Flowers (Small for mobile) */
     .flower {
-        width: 160px;
-        height: 160px;
+        width: 140px;
+        height: 140px;
         margin-bottom: -35px;
     }
 
     .stem {
-        width: 6px;
+        width: 5px;
     }
 
+    /* Butterfly (Small for mobile) */
     .flying-butterfly {
-        width: 60px;
-        height: 60px;
+        width: 55px;
+        height: 55px;
     }
 
+    /* Bouquet adjustments */
+    .big-bouquet-img {
+        max-width: 90vw;
+        max-height: 45vh;
+        /* Adjust para hindi takpan ang lyrics */
+    }
+
+    /* Lyrics position */
     #lyrics-container {
-        bottom: 8%;
+        bottom: 12%;
     }
 
     #lyric-text {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
         line-height: 1.2;
     }
 }
